@@ -25,6 +25,7 @@ declare module 'vue' {
     TMenu: typeof import('tdesign-vue-next')['Menu']
     TMenuItem: typeof import('tdesign-vue-next')['MenuItem']
     TSubmenu: typeof import('tdesign-vue-next')['Submenu']
+    TTooltip: typeof import('tdesign-vue-next')['Tooltip']
     UserCircleIcon: typeof import('tdesign-icons-vue-next')['UserCircleIcon']
     UserIcon: typeof import('tdesign-icons-vue-next')['UserIcon']
   }

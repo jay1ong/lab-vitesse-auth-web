@@ -504,3 +504,4 @@ yarn-error.log
 
 # and uncomment the following lines
 # .pnp.*
+vite.config.ts.timestamp-*

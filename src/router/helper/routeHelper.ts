@@ -25,13 +25,13 @@ function getMenuVisible(route: RouteRecordRaw): boolean {
   return route.meta !== undefined && !route.meta.hideMenu
 }
 
-function getAllParentByName(path: string,
+function getAllParentByName(name: string,
   routes: Readonly<RouteRecordRaw[]>): string[] {
   const parents: string[] = []
   const list: RouteRecordRaw[] = []
   treeToList(routes, list)
   list.forEach((element) => {
-    const parent = getChildByName(path, element)
+    const parent = getChildByName(name, element)
     if (parent)
       parents.push(element.path as string)
   })
@@ -48,14 +48,14 @@ function treeToList(routes: Readonly<RouteRecordRaw[]>,
   return list
 }
 
-function getChildByName(path: string,
+function getChildByName(name: string,
   route: RouteRecordRaw): RouteRecordRaw | undefined {
   return route.children?.find((element) => {
-    if (element.path === path)
+    if (element.name === name)
       return true
     else
-      return getChildByName(path, element)
+      return getChildByName(name, element)
   })
 }
 
-export { routeExist, anyChildrenVisible, getMenuVisible, getAllParentByName }
+export { routeExist, anyChildrenVisible, getMenuVisible, getAllParentByName, treeToList }

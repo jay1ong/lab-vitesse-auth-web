@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <script setup lang="ts">
 import type { UnwrapRef } from 'vue'
 import { reactive } from 'vue'

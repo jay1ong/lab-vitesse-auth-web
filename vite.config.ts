@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import Pages from 'vite-plugin-pages'
+import VueRouter from 'unplugin-vue-router/vite'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -11,6 +11,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
 import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 import VueMacros from 'unplugin-vue-macros/vite'
 import WebfontDownload from 'vite-plugin-webfont-dl'
@@ -41,17 +42,15 @@ export default defineConfig({
   },
 
   plugins: [
+    VueRouter({
+      /* options */
+    }),
     VueMacros({
       plugins: {
         vue: Vue({
           include: [/\.vue$/, /\.md$/],
         }),
       },
-    }),
-
-    // https://github.com/hannoeru/vite-plugin-pages
-    Pages({
-      extensions: ['vue', 'md', 'tsx'],
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -65,6 +64,7 @@ export default defineConfig({
         'vue-i18n',
         '@vueuse/head',
         '@vueuse/core',
+        VueRouterAutoImports,
       ],
       dts: 'src/auto-imports.d.ts',
       dirs: [

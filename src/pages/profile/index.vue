@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAuthStore } from '../../stores/module/auth.module'
-import userService from '../../services/user.service'
+import { useAuthStore } from '~/stores/module/auth.module'
+import userService from '~/services/user.service'
 
 defineOptions({
   name: 'Profile',
@@ -77,5 +77,5 @@ onMounted(() => {
 <route lang="yaml">
 meta:
   title: 用户信息
-  icon: add
+  icon: bulletpoint
 </route>

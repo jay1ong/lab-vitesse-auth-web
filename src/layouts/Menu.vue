@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import type { MenuValue } from 'tdesign-vue-next'
 import { MessagePlugin } from 'tdesign-vue-next'
+import { routes } from 'vue-router/auto/routes'
+import type { RouteRecordRaw } from 'vue-router'
+
 import {
   anyChildrenVisible,
   getAllParentByName,
   routeExist,
+  treeToList,
 } from '~/router/helper/routeHelper'
+
+import { menu } from '~/router/helper/menu'
 
 defineOptions(
   {
@@ -15,12 +21,11 @@ defineOptions(
 
 const emit = defineEmits(['onCollapsed'])
 
-const routes: string[] = []
+let route: string[] = []
 
 const { name } = useRoute()
 
 const { replace } = useRouter()
-const route = useRouter()
 
 const unrefName = unref(name) as string
 const selectedKey = unrefName
@@ -37,15 +42,17 @@ function handleChangeCollapsed() {
 }
 
 function handleMenuChange(item: MenuValue) {
-  if (routeExist([item as string], routes))
-    replace({ name: item as string })
+  if (routeExist([item as string], route))
+    replace(item as string)
   else
     MessagePlugin.error('路由表不存在该路由')
 }
 
 onMounted(() => {
-  const routes = getAllParentByName(selectedKey as string, route.options.routes)
-  routes.forEach((element: string) => {
+  const list: RouteRecordRaw[] = []
+  route = treeToList(routes, list).map(element => element.name as string)
+  const rs = getAllParentByName(selectedKey as string, routes)
+  rs.forEach((element: string) => {
     state.openKeys.push(element)
   })
 })
@@ -56,34 +63,34 @@ onMounted(() => {
     <template #operations>
       <t-icon size="large" class="t-menu__operations-icon" name="view-list" @click="handleChangeCollapsed" />
     </template>
-    <template v-for="item in route.options.routes" :key="item.name">
-      <t-submenu v-if="item.children && anyChildrenVisible(item.children)" :value="item.path" :title="item.meta?.title">
+    <template v-for="item in routes" :key="item.name">
+      <t-submenu v-if="item.children && anyChildrenVisible(item.children)" :value="item.path" :title="menu[item.path].title">
         <template #icon>
-          <t-icon :name="item.meta?.icon" />
+          <t-icon :name="menu[item.path].icon" />
         </template>
-        <template v-for="child in item.children" :key="child.name">
-          <t-submenu v-if="child.children && anyChildrenVisible(child.children)" :value="child.path" :title="child.meta?.title">
+        <template v-for="c1 in item.children" :key="c1.name">
+          <t-submenu v-if="c1.children && anyChildrenVisible(c1.children)" :value="c1.path" :title="menu[c1.path].title">
             <template #icon>
-              <t-icon :name="child.meta?.icon" />
+              <t-icon :name="menu[c1.path].icon" />
             </template>
-            <template v-for="c in child.children" :key="c.name">
-              <t-menu-item v-if="c.meta?.title && c.meta?.icon" :value="c.path">
+            <template v-for="c2 in c1.children" :key="c2.name">
+              <t-menu-item v-if=" c2.meta?.title && c2.meta?.icon" :value="(c2.name) as string">
                 <template #icon>
-                  <t-icon :name="c.meta?.icon" />
+                  <t-icon :name="c2.meta?.icon" />
                 </template>
-                <span>{{ c.name }}</span>
+                <span>{{ c2.meta?.title }}</span>
               </t-menu-item>
             </template>
           </t-submenu>
-          <t-menu-item v-if="!child.children && child.meta?.title && child.meta?.icon" :value="child.path">
+          <t-menu-item v-if="!c1.children && c1.meta?.title && c1.meta?.icon" :value="(c1.name) as string">
             <template #icon>
-              <t-icon :name="child.meta?.icon" />
+              <t-icon :name="c1.meta?.icon" />
             </template>
-            <span>{{ child.meta.title }}</span>
+            <span>{{ c1.meta.title }}</span>
           </t-menu-item>
         </template>
       </t-submenu>
-      <t-menu-item v-if="!item.children && item.meta?.title && item.meta?.icon" :value="item.path">
+      <t-menu-item v-if="!item.children && item.meta?.title && item.meta?.icon" :value="(item.name) as string">
         <template #icon>
           <t-icon :name="item.meta?.icon" />
         </template>

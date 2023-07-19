@@ -22,7 +22,6 @@
       "vitest",
       "vite/client",
       "vue/ref-macros",
-      "vite-plugin-pages/client",
       "vite-plugin-vue-layouts/client",
       "unplugin-vue-macros/macros-global"
     ],
