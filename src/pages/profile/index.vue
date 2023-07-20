@@ -68,9 +68,6 @@ onMounted(() => {
         {{ role }}
       </li>
     </ul>
-    <h1 class="text-2xl">
-      用户信息
-    </h1>
     <p>{{ state.userInfo }}</p>
   </div>
 </template>

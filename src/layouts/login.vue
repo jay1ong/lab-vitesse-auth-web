@@ -43,8 +43,9 @@ function handleLogin() {
     push('/profile')
     NotifyPlugin.success({
       title: '登录成功',
-      content: `欢迎回来：${user.username}`,
+      content: () => h('p', { class: 'text-left' }, `欢迎回来：${user.username}`),
       duration: 0,
+      closeBtn: true,
     })
   })
 }
@@ -97,5 +98,3 @@ onMounted(() => {
     </t-card>
   </div>
 </template>
-
-<style scoped></style>
