@@ -39,9 +39,10 @@ onMounted(() => {
 <template>
   <div class="container">
     <header class="jumbotron">
+      <h2><strong>Profile</strong></h2>
       <h3>
         <strong>username:</strong>
-        <strong>{{ currentUser?.username }}</strong> Profile
+        {{ currentUser?.username }}
       </h3>
     </header>
     <p>

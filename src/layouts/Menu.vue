@@ -25,7 +25,7 @@ let route: string[] = []
 
 const { name } = useRoute()
 
-const { replace } = useRouter()
+const { push } = useRouter()
 
 const unrefName = unref(name) as string
 const selectedKey = unrefName
@@ -43,7 +43,7 @@ function handleChangeCollapsed() {
 
 function handleMenuChange(item: MenuValue) {
   if (routeExist([item as string], route))
-    replace(item as string)
+    push(item as string)
   else
     MessagePlugin.error('路由表不存在该路由')
 }

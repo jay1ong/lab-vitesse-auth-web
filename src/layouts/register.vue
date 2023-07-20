@@ -38,7 +38,7 @@ function handleRegister() {
   register(user)
     .then(() => {
       MessagePlugin.success('注册成功')
-      push('/profile/index')
+      push('/profile')
     })
     .catch((error) => {
       MessagePlugin.error(`注册失败:${error.message}`)

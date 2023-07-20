@@ -6,7 +6,7 @@ const userLocalStorage = useStorage('user', initUser)
 export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
     router.beforeEach((to, from, next) => {
-      const publicPages = ['/']
+      const publicPages = ['/', '/register']
       const authRequired = !publicPages.includes(to.path)
       // your auth logic
       // trying to access a restricted page + not logged in
@@ -18,7 +18,7 @@ export const install: UserModule = ({ isClient, router }) => {
         next()
 
       // 返回 false 以取消导航
-      return false
+    //   return false
     })
   }
 }

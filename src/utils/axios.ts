@@ -26,10 +26,6 @@ instance.interceptors.request.use(
       const authorization = `Bearer ${unrefUser.accessToken}`
       config.headers.Authorization = authorization
     }
-    else {
-      const { logout } = useAuthStoreWithOut()
-      logout()
-    }
     return config
   },
   (error) => {

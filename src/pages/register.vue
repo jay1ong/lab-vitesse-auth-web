@@ -7,6 +7,6 @@
 
 <route lang="yaml">
 meta:
-  layout: login
+  layout: register
   hideMenu: true
   </route>
