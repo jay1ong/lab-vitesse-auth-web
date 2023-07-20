@@ -1,5 +1,4 @@
 import { type UserModule } from '~/types'
-import initUser from '~/services/model/initUser'
 
 const userLocalStorage = useStorage('user', initUser)
 

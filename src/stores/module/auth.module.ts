@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
-import AuthService from '../../services/auth.service'
-import type { UserModel } from '../../services/model/userModel'
-
-import { store } from '../../stores'
-import initUser from '~/services/model/initUser'
+import AuthService from '~/services/auth.service'
+import { store } from '~/stores'
+import type { UserModel } from '~/composables/userModel'
 
 const userLocalStorage = useStorage('user', initUser)
 

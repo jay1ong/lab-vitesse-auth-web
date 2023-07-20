@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { UnwrapRef } from 'vue'
-import { reactive } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
-import type { UserModel } from '~/services/model/userModel'
+import type { UserModel } from '~/composables/userModel'
 import { useAuthStore } from '~/stores/module/auth.module'
 
 defineOptions({

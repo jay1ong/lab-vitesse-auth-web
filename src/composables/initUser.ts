@@ -1,6 +1,6 @@
 import type { UserModel } from './userModel'
 
-const user: UserModel = {
+export const user: UserModel = {
   username: '',
   password: '',
   accessToken: '',

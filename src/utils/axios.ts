@@ -2,10 +2,9 @@ import { unref } from 'vue'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 import { MessagePlugin } from 'tdesign-vue-next'
-import { useAuthStoreWithOut } from '../stores/module/auth.module'
-import type { ApiMessageModel } from '../services/model/httpModel'
-import initUser from '~/services/model/initUser'
-import type { UserModel } from '~/services/model/userModel'
+import { useAuthStoreWithOut } from '~/stores/module/auth.module'
+import type { ApiMessageModel } from '~/composables/httpModel'
+import type { UserModel } from '~/composables/userModel'
 
 const instance = axios.create()
 

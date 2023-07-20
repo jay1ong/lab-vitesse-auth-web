@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-
 import { MessagePlugin, NotifyPlugin } from 'tdesign-vue-next'
-import type { UserModel } from '../services/model/userModel'
-import { useAuthStore } from '../stores/module/auth.module'
+import type { UserModel } from '~/composables/userModel'
+
+import { useAuthStore } from '~/stores/module/auth.module'
 
 defineOptions({
   name: 'Login',
@@ -44,7 +43,6 @@ function handleLogin() {
     NotifyPlugin.success({
       title: '登录成功',
       content: () => h('p', { class: 'text-left' }, `欢迎回来：${user.username}`),
-      duration: 0,
       closeBtn: true,
     })
   })

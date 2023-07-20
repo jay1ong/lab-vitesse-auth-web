@@ -1,5 +1,5 @@
 import { axios, post } from '../utils/axios'
-import type { UserModel } from './model/userModel'
+import type { UserModel } from '~/composables/userModel'
 
 const API_URL = '/auth'
 
