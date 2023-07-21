@@ -1,4 +1,4 @@
-<!-- <script lang="ts" setup>
+<script  setup lang="ts">
 import type {
   DialogInstance,
 
@@ -33,7 +33,7 @@ const selectedRowKeysRef = ref([])
 
 async function fetchData() {
   state.loading = true
-  state.data = await listApi(state.user.id, state.type).finally(
+  state.data = await listUserApi().finally(
     () => (state.loading = false),
   )
 }
@@ -45,7 +45,7 @@ async function handleRefresh() {
   state.modalVisible = false
 }
 
-const rwForm = ref<any>(null)
+const userForm = ref<any>(null)
 
 function handleCreate() {
   state.formType = 'create'
@@ -74,51 +74,57 @@ function handleRowClick(e: RowEventContext<UserModel>) {
 
 <template>
   <div>
-    <PageHeader :title="state.title" />
-    <t-button v-if="state.fzr" class="mt-5 flex" @click="handleCreate">
+    <t-button class="mt-5 flex" @click="handleCreate">
       新增
     </t-button>
-    <t-card class="mt-5 rounded">
-      <t-table
-        :data="state.data"
-        :columns="columns"
-        row-key="id"
-        :selected-row-keys="selectedRowKeysRef"
-        :loading="state.loading"
-        max-height="650px"
-        :fixed-rows="[0, 0]"
-        size="small"
-        @row-click="handleRowClick"
-      >
-        <template #operation="{ row }">
-          <t-button
-            variant="text"
-            theme="primary"
-            @click.stop="
-              () => {
-                state.formType = 'edit';
-                state.modalVisible = true;
-                state.formData = row
-              }
-            "
-          >
-            编辑
-          </t-button>
-          <t-divider layout="vertical" />
-          <t-button
-            variant="text"
-            theme="danger"
-            @click.stop="handleDelete(row.id)"
-          >
-            删除
-          </t-button>
-        </template>
-      </t-table>
-    </t-card>
+    <t-table
+      class="mt-5 p-2"
+      :data="state.data"
+      :columns="columns"
+      row-key="id"
+      :selected-row-keys="selectedRowKeysRef"
+      :loading="state.loading"
+      max-height="650px"
+      :fixed-rows="[0, 0]"
+      size="small"
+      table-layout="auto"
+      :resizable="true"
+      @row-click="handleRowClick"
+    >
+      <template #operation="{ row }">
+        <t-button
+          variant="text"
+          theme="primary"
+          @click.stop="
+            () => {
+              state.formType = 'edit';
+              state.modalVisible = true;
+              state.formData = row
+            }
+          "
+        >
+          编辑
+        </t-button>
+        <t-divider layout="vertical" />
+        <t-button
+          variant="text"
+          theme="danger"
+          @click.stop="handleDelete(row.id)"
+        >
+          删除
+        </t-button>
+      </template>
+    </t-table>
   </div>
 </template>
 
-  <!-- <style lang="scss" scoped>
+<route lang="yaml">
+meta:
+  title: 用户列表
+  icon: file-paste
+  </route>
+
+  <style  scoped>
   :deep(table thead tr th) {
     color: black;
     background-color: white !important;
@@ -128,7 +134,4 @@ function handleRowClick(e: RowEventContext<UserModel>) {
     border-top: 1px solid #e2e8f0;
     margin: 0;
   }
-  // :deep(.t-table__content::-webkit-scrollbar) {
-  //   display: none;
-  // }
-  </style> --> -->
+  </style>

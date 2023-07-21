@@ -45,7 +45,7 @@ onMounted(() => {
         <t-divider h="2/5" layout="vertical" />
         <HeaderVue color-white />
       </t-header>
-      <t-content mt-5>
+      <t-content bg-hex-eff4f9 p-5>
         <RouterView>
           <template #default="{ Component, route }">
             <component :is="Component" :key="route.fullPath" />
