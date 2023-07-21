@@ -1,12 +1,15 @@
 <!-- <script lang="ts" setup>
 import type {
   DialogInstance,
+
+  RowEventContext,
 } from 'tdesign-vue-next'
 import {
   DialogPlugin,
   MessagePlugin,
 } from 'tdesign-vue-next'
 import { columns, formInitData } from './data'
+import type { UserModel } from '~/composables/userModel'
 
 defineOptions({
   name: 'UserList',
@@ -115,7 +118,7 @@ function handleRowClick(e: RowEventContext<UserModel>) {
   </div>
 </template>
 
-  <style lang="scss" scoped>
+  <!-- <style lang="scss" scoped>
   :deep(table thead tr th) {
     color: black;
     background-color: white !important;
@@ -128,4 +131,4 @@ function handleRowClick(e: RowEventContext<UserModel>) {
   // :deep(.t-table__content::-webkit-scrollbar) {
   //   display: none;
   // }
-  </style> -->
+  </style> --> -->

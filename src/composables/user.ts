@@ -6,7 +6,7 @@ import { get } from '~/utils/axios'
 /**
  * 用户列表
  */
-export function listApi() {
+export function listUserApi() {
   return get('/users', {
 
   })

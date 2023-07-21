@@ -73,6 +73,7 @@ export const useAuthStore = defineStore({
       this.status.loggedIn = false
       this.user = null
       userLocalStorage.value = null
+      location.reload()
     },
     registerSuccess() {
       this.status.loggedIn = false
