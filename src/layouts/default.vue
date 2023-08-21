@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { VNodeRef } from 'vue'
 import { useAuthStore } from '../stores/module/auth.module'
 import HeaderVue from './Header.vue'
 
@@ -22,15 +23,26 @@ function handleOnCollapsed(collapsed: boolean) {
   collapsedRef.value = collapsed
 }
 
+const layoutRef: VNodeRef = ref({})
+
+const headerRef: VNodeRef = ref({})
+
+const contentStyleRef = ref({})
+// const width = headerRef.value.offsetWidth
+
 onMounted(() => {
+  contentStyleRef.value = {
+    width: `${layoutRef.value.$el.clientWidth - headerRef.value.$el.clientWidth}px`,
+  }
+
   if (!unref(loggedIn))
     push('/')
 })
 </script>
 
 <template>
-  <t-layout h-full>
-    <t-aside h-full :w="collapsedRef ? '64px' : ''">
+  <t-layout ref="layoutRef" h-full>
+    <t-aside ref="headerRef" h-full :w="collapsedRef ? '64px' : ''">
       <div h-full flex flex-col>
         <div flex items-center justify-center bg-hex-262f3e p-1.5>
           <img max-h-12 max-w-12 src="@/assets/logo-blue(已去底).png" p-1>
@@ -40,7 +52,7 @@ onMounted(() => {
         <MenuVue h-full bg-hex-262f3e @onCollapsed="handleOnCollapsed" />
       </div>
     </t-aside>
-    <t-layout>
+    <t-layout :style="contentStyleRef">
       <t-header class="h-15 flex items-center justify-between bg-hex-262f3e">
         <t-divider h="2/5" layout="vertical" />
         <HeaderVue color-white />
