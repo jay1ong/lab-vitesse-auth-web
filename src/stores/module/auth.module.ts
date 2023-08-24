@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import AuthService from '~/services/auth.service'
 import { store } from '~/stores'
 import type { UserModel } from '~/composables/userModel'
+import type { ApiMessageModel } from '~/composables/httpModel'
 
 const userLocalStorage = useStorage('user', initUser)
 
@@ -52,7 +53,7 @@ export const useAuthStore = defineStore({
           this.registerSuccess()
           return Promise.resolve(response)
         },
-        (error: any) => {
+        (error: ApiMessageModel) => {
           this.registerFailure()
           return Promise.reject(error)
         },

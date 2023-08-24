@@ -38,37 +38,62 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h2><strong>Profile</strong></h2>
-      <h3>
-        <strong>username:</strong>
-        {{ currentUser?.username }}
-      </h3>
-    </header>
-    <p>
-      <strong>Token:</strong>
-      {{ currentUser?.accessToken?.substring(0, 20) }} ...
-      {{ currentUser?.accessToken?.substr(currentUser?.accessToken.length - 20) }}
-    </p>
-    <p class="ml-5 truncate">
-      <strong>Token(all):</strong>
-      {{ currentUser?.accessToken }}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{ currentUser?.id }}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{ currentUser?.email }}
-    </p>
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="role in currentUser?.roles" :key="role">
-        {{ role }}
-      </li>
-    </ul>
-    <p>{{ state.userInfo }}</p>
+    <t-card>
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          用户名
+        </t-col>
+        <t-col :span="9">
+          {{ currentUser?.username }}
+        </t-col>
+      </t-row>
+      <t-divider />
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          Token
+        </t-col>
+        <t-col :span="9" truncate>
+          {{ currentUser?.accessToken }}
+        </t-col>
+      </t-row>
+      <t-divider />
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          id
+        </t-col>
+        <t-col :span="9">
+          {{ currentUser?.id }}
+        </t-col>
+      </t-row>
+      <t-divider />
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          邮件
+        </t-col>
+        <t-col :span="9">
+          {{ currentUser?.email }}
+        </t-col>
+      </t-row>
+      <t-divider />
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          角色
+        </t-col>
+        <t-col :span="9">
+          {{ currentUser?.roles }}
+        </t-col>
+      </t-row>
+      <t-divider />
+      <t-row>
+        <t-col :span="2" text-left color-gray-400>
+          用户信息
+        </t-col>
+        <t-col :span="9" truncate>
+          {{ state.userInfo }}
+        </t-col>
+      </t-row>
+      <t-divider />
+    </t-card>
   </div>
 </template>
 

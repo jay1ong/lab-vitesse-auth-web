@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MessagePlugin, NotifyPlugin } from 'tdesign-vue-next'
+import { NotifyPlugin } from 'tdesign-vue-next'
 import type { UserModel } from '~/composables/userModel'
 
 import { useAuthStore } from '~/stores/module/auth.module'
@@ -26,16 +26,6 @@ const { push, replace } = useRouter()
 const loggedIn = computed(() => {
   return status.loggedIn
 })
-
-function handleFinish({ validateResult, firstError, e }: any) {
-  e.preventDefault()
-  if (validateResult === true) {
-    // MessagePlugin.success('提交成功')
-  }
-  else {
-    MessagePlugin.warning(firstError)
-  }
-}
 
 function handleLogin() {
   login(user).then((user: UserModel) => {
@@ -64,7 +54,7 @@ onMounted(() => {
       <div w-full flex flex-col>
         <img max-h-20 max-w-20 self-center src="@/assets/logo.png">
         <span mt-2 text-center text-3xl>登录</span>
-        <t-form mt-5 :rules="rules" :data="user" :label-width="0" @submit="handleFinish">
+        <t-form mt-5 :rules="rules" :data="user" :label-width="0">
           <t-form-item>
             <t-input v-model:value="user.username" h-10 placeholder="请输入用户名" size="large">
               <template #prefix-icon>

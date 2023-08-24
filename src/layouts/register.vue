@@ -23,16 +23,6 @@ const { register } = useAuthStore()
 // 路由相关
 const { push } = useRouter()
 
-function handleFinish({ validateResult, firstError, e }: any) {
-  e.preventDefault()
-  if (validateResult === true) {
-    // MessagePlugin.success('提交成功')
-  }
-  else {
-    MessagePlugin.warning(firstError)
-  }
-}
-
 function handleRegister() {
   register(user)
     .then(() => {
@@ -60,7 +50,6 @@ function handleLogin() {
           :rules="rules"
           :data="user"
           :label-width="0"
-          @submit="handleFinish"
         >
           <t-form-item>
             <t-input

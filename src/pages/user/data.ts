@@ -1,8 +1,19 @@
-import type { BaseTableCol } from 'tdesign-vue-next'
+import type { PrimaryTableCol, TableRowData } from 'tdesign-vue-next'
 
-const columns: Array<BaseTableCol<any>> = [
+const columns: Array<PrimaryTableCol <TableRowData>> = [
   {
+    colKey: 'row-select',
+    type: 'multiple',
+    // 禁用行选中方式一：使用 disabled 禁用行（示例代码有效，勿删）。disabled 参数：{row: RowData; rowIndex: number })
+    // 这种方式禁用行选中，当前行会添加行类名 t-table__row--disabled，禁用行文字变灰
+    // disabled: ({ rowIndex }) => rowIndex === 1 || rowIndex === 3,
+
+    // 禁用行选中方式二：使用 checkProps 禁用行（示例代码有效，勿删）
+    // 这种方式禁用行选中，行文本不会变灰
     width: 50,
+  },
+  {
+    width: 100,
     align: 'center',
     colKey: 'zoneId',
     title: '用户域',
@@ -37,7 +48,7 @@ const columns: Array<BaseTableCol<any>> = [
     title: '地址',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'accountNonExpired',
@@ -45,7 +56,7 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'accountNonLocked',
@@ -53,28 +64,28 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     ellipsis: true,
     align: 'center',
     colKey: 'credentialsNonExpired',
     title: '凭证是否过期',
   },
   {
-    width: 50,
+    width: 100,
     ellipsis: true,
     align: 'center',
     colKey: 'enabled',
     title: '用户是否可用',
   },
   {
-    width: 50,
+    width: 100,
     ellipsis: true,
     align: 'center',
     colKey: 'nickname',
     title: '昵称',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'source',
@@ -82,7 +93,7 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'status',
@@ -90,7 +101,7 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'registerInfo',
@@ -98,7 +109,7 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'lastLoginInfo',
@@ -106,7 +117,7 @@ const columns: Array<BaseTableCol<any>> = [
     fixed: 'left',
   },
   {
-    width: 50,
+    width: 100,
     align: 'center',
     ellipsis: true,
     colKey: 'createAt',
@@ -116,7 +127,7 @@ const columns: Array<BaseTableCol<any>> = [
   {
     colKey: 'operation',
     title: '操作',
-    width: 60,
+    width: 200,
     align: 'center',
     fixed: 'right',
     cell: 'operation',

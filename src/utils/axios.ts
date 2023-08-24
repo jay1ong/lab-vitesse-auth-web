@@ -111,6 +111,10 @@ function put(url: string, config: AxiosRequestConfig): Promise<any> {
   return request(url, { ...config, method: 'PUT' })
 }
 
+function del(url: string, config: AxiosRequestConfig): Promise<any> {
+  return request(url, { ...config, method: 'DELETE' })
+}
+
 function request(url: string, config: AxiosRequestConfig) {
   return new Promise((resolve, reject) => {
     instance
@@ -130,4 +134,4 @@ function request(url: string, config: AxiosRequestConfig) {
   })
 }
 
-export { instance as axios, get, post, put, request }
+export { instance as axios, get, post, put, del, request }
