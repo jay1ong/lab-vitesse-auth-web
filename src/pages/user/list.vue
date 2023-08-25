@@ -1,15 +1,18 @@
 <script  setup lang="ts">
 import type {
+  Data,
   DialogInstance,
   RowEventContext,
   SelectOptions,
+  SubmitContext,
   TableRowData,
 } from 'tdesign-vue-next'
 import {
   DialogPlugin,
   MessagePlugin,
 } from 'tdesign-vue-next'
-import { columns, formInitData } from './data'
+import { columns, formInitData, rules } from './data'
+import type { UserModel } from '~/composables/userModel'
 
 defineOptions({
   name: 'UserList',
@@ -23,11 +26,11 @@ const state = reactive<
     title: string
     type: string
     titleIcon: string
-    data: Recordable[]
+    data: Data[]
     loading: boolean
     formType: string
     modalVisible: boolean
-    formData: Recordable
+    formData: Data
     selectedRowKeys: string[]
   }
 >({
@@ -51,7 +54,7 @@ async function fetchData() {
 
 fetchData()
 
-async function handleRefresh() {
+async function refresh() {
   fetchData()
   state.modalVisible = false
 }
@@ -64,32 +67,26 @@ function handleCreate() {
   state.modalVisible = true
 }
 
-function handleMultiDelete() {
+function removeUser(ids: string[]) {
   const confirmDia: DialogInstance = DialogPlugin.confirm({
     header: '确定删除数据?',
     body: '请确定是否删除当前数据，删除后无法找回。',
     onConfirm: async () => {
-      await deleteUserApi(state.selectedRowKeys)
+      await removeUserApi(ids)
       MessagePlugin.success('删除成功')
-      await handleRefresh()
+      await refresh()
       // 请求成功后，销毁弹框
       confirmDia.destroy!()
     },
   })
 }
 
+function handleMultiDelete() {
+  removeUser(state.selectedRowKeys)
+}
+
 function handleDelete(id: string) {
-  const confirmDia: DialogInstance = DialogPlugin.confirm({
-    header: '确定删除数据?',
-    body: '请确定是否删除当前数据，删除后无法找回。',
-    onConfirm: async () => {
-      await deleteUserApi([id])
-      MessagePlugin.success('删除成功')
-      await fetchData()
-      // 请求成功后，销毁弹框
-      confirmDia.destroy!()
-    },
-  })
+  removeUser([id])
 }
 
 function handleRowClick(e: RowEventContext<TableRowData>) {
@@ -98,6 +95,41 @@ function handleRowClick(e: RowEventContext<TableRowData>) {
 
 function handleSelectChange(value: (string | number)[], { selectedRowData }: SelectOptions<TableRowData>) {
   state.selectedRowKeys = value as never
+}
+
+function onReset() {
+  state.formData = formInitData
+  MessagePlugin.success('重置成功')
+}
+
+async function onSubmit({ validateResult, firstError }: SubmitContext<Data>) {
+  if (validateResult === true) {
+    if (state.formType === 'create') {
+      await addUserApi(state.formData as UserModel)
+      await refresh()
+    }
+    else if (state.formType === 'edit') {
+      await changeUserApi(state.formData as UserModel)
+      await refresh()
+    }
+    MessagePlugin.success('保存成功')
+  }
+  else {
+    MessagePlugin.warning(firstError as string)
+  }
+}
+
+function handleEdit(row: TableRowData) {
+  state.formType = 'edit'
+  state.formData = {
+    id: row.id,
+    username: row.username,
+    password: '',
+    email: row.email,
+    phoneNumber: row.phoneNumber,
+    nickname: row.nickname,
+  }
+  state.modalVisible = true
 }
 </script>
 
@@ -129,13 +161,7 @@ function handleSelectChange(value: (string | number)[], { selectedRowData }: Sel
         <t-button
           variant="text"
           theme="primary"
-          @click.stop="
-            () => {
-              state.formType = 'edit';
-              state.modalVisible = true;
-              state.formData = row
-            }
-          "
+          @click.stop="handleEdit(row)"
         >
           编辑
         </t-button>
@@ -149,6 +175,38 @@ function handleSelectChange(value: (string | number)[], { selectedRowData }: Sel
         </t-button>
       </template>
     </t-table>
+
+    <t-dialog
+      :visible="state.modalVisible" :cancel-btn="null" :confirm-btn="null"
+      :on-esc-keydown="() => { state.modalVisible = false }" :on-overlay-click="() => { state.modalVisible = false }"
+      @close-btn-click="state.modalVisible = false"
+    >
+      <t-form :rules="rules" :data="state.formData" :colon="true" @reset="onReset" @submit="onSubmit">
+        <t-form-item label="用户名" name="username" initial-data="">
+          <t-input v-model="state.formData.username" placeholder="请输入用户名" />
+        </t-form-item>
+        <t-form-item label="密码" name="password" initial-data="">
+          <t-input v-model="state.formData.password" placeholder="请输入密码" />
+        </t-form-item>
+        <t-form-item label="邮箱" name="email.value" initial-data="">
+          <t-input v-model="state.formData.email.value" placeholder="请输入邮箱" />
+        </t-form-item>
+        <t-form-item label="手机号" name="phoneNumber.value" initial-data="">
+          <t-input v-model="state.formData.phoneNumber.value" placeholder="请输入手机号" />
+        </t-form-item>
+        <t-form-item label="昵称" name="nickname" initial-data="">
+          <t-input v-model="state.formData.nickname" placeholder="请输入昵称" />
+        </t-form-item>
+        <t-space size="small">
+          <t-button theme="primary" type="submit">
+            提交
+          </t-button>
+          <t-button theme="default" variant="base" type="reset">
+            重置
+          </t-button>
+        </t-space>
+      </t-form>
+    </t-dialog>
   </div>
 </template>
 

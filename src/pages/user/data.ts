@@ -1,6 +1,6 @@
-import type { PrimaryTableCol, TableRowData } from 'tdesign-vue-next'
+import type { Data, FormRules, PrimaryTableCol, TableRowData } from 'tdesign-vue-next'
 
-const columns: Array<PrimaryTableCol <TableRowData>> = [
+const columns: Array<PrimaryTableCol<TableRowData>> = [
   {
     colKey: 'row-select',
     type: 'multiple',
@@ -134,23 +134,28 @@ const columns: Array<PrimaryTableCol <TableRowData>> = [
   },
 ]
 
-const rules = {
-  xz: [{ required: true, message: '请输入性质', type: 'error' }],
-  createTime: [{ required: true, message: '请选择日期', type: 'error' }],
-  mbId: [{ required: true, message: '请选择模板', type: 'error' }],
-  wtlyId: [{ required: true, message: '请选择问题来源', type: 'error' }],
+const rules: FormRules<Data> = {
+  username: [
+    { required: true, message: '请输入用户名', type: 'error' },
+  ],
+  password: [
+    { required: true, message: '请输入密码', type: 'error' },
+  ],
 }
 
 const formInitData = {
-  xz: '',
-  // rq: moment.utc().format(),
-  ms: '',
-  type: '0',
-  mbId: '',
-  userId: '',
-  rwmb: undefined,
-  wtlyId: '',
-  wtly: undefined,
+  id: undefined,
+  username: undefined,
+  password: undefined,
+  email: {
+    value: undefined,
+    verified: false,
+  },
+  phoneNumber: {
+    value: undefined,
+    verified: false,
+  },
+  nickname: undefined,
 }
 
 export { columns, rules, formInitData }
